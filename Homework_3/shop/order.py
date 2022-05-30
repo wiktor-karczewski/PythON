@@ -1,5 +1,6 @@
 import random
-from .product import Product, print_product
+from shop.product import Product
+from shop.order_element import OrderElement
 
 
 class Order:
@@ -9,27 +10,28 @@ class Order:
         if order_list is None:
             order_list = []
         self.order_list = order_list
+        self.total_price = self.calculate_total_price()
 
+    def calculate_total_price(self):
         total_price = 0
-        for product in order_list:
-            total_price += product.price
-        self.total_price = total_price
-        pass
+        for element in self.order_list:
+            total_price += element.calculate_price()
+        return total_price
 
+    def print_self(self):
+        print("=" * 20)
+        print(f"Zamawiający: {self.first_name} {self.last_name}")
+        print("Lista zakupów:")
+        for product in self.order_list:
+            product.print_self()
+        print(f"Łączna kwota: {self.total_price}")
+        print("=" * 20)
 
-def print_order(order):
-    print("=" * 20)
-    print(f"Zamawiający: {order.first_name} {order.last_name}")
-    print("Lista zakupów:")
-    for product in order.order_list:
-        print_product(product)
-    print(f"Łączna kwota: {order.total_price}")
-    print("=" * 20)
 
 def create_random_order():
     random_number = random.randint(1, 20)
     order = []
     for i in range(random_number):
-        order.append(Product("Produkt" + str(i), "random", random.randint(1, 15)))
+        order.append(OrderElement(Product("Produkt" + str(i), "inne", random.randint(1, 15)), random.randint(1, 8)))
     random_order = Order("Janusz", "Kowalski", order)
-    print_order(random_order)
+    random_order.print_self()
