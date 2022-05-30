@@ -1,7 +1,6 @@
 from shop.apple import Apple
 from shop.potato import Potato
 from shop.order import Order, create_random_order
-from shop.product import Product
 
 
 def start_example():
@@ -19,4 +18,3 @@ def start_example():
 if __name__ == "__main__":
     print("Start")
     start_example()
-
